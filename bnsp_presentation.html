@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analyst Portfolio - M. Armaise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slide-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 1400px;
+            height: 90%;
+            padding: 60px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Slide 1 - Cover */
+        .cover-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-slide h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .cover-slide h2 {
+            font-size: 2em;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .cover-slide .info {
+            font-size: 1.3em;
+            margin-top: 40px;
+        }
+
+        /* Slide Headers */
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Profile Section */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .profile-card h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .profile-card ul {
+            list-style: none;
+            line-height: 2;
+        }
+
+        .profile-card ul li:before {
+            content: "✓ ";
+            color: #ffd700;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kpi-card .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .kpi-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Dashboard Embed */
+        .dashboard-container {
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            height: 700px;
+        }
+
+        .dashboard-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Insights Grid */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .insight-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .insight-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .insight-card p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .insight-card .highlight {
+            background: #fff3cd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #856404;
+        }
+
+        /* Recommendations */
+        .recommendation-card {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .recommendation-card h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .recommendation-card ul {
+            list-style: none;
+            line-height: 2.2;
+        }
+
+        .recommendation-card ul li:before {
+            content: "→ ";
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        /* Methodology Timeline */
+        .timeline {
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 50px;
+            width: 2px;
+            height: 100%;
+            background: #667eea;
+        }
+
+        .timeline-dot {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-right: 30px;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .tool-card {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .tool-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .tool-card:hover h3 {
+            color: white;
+        }
+
+        /* Impact Cards */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .impact-card .big-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        /* Contact Info */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .contact-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-item .icon {
+            font-size: 2em;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .slide-content {
+                padding: 40px;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .profile-grid, .insights-grid, .impact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Cover -->
+        <div class="slide active">
+            <div class="slide-content cover-slide">
+                <h1>📊 PORTOFOLIO DATA ANALYST</h1>
+                <h2>Analisis Performa Penjualan & Strategi Bisnis Berbasis Data</h2>
+                <div class="info">
+                    <p style="font-size: 1.5em; margin: 20px 0;"><strong>M. ARMAISE</strong></p>
+                    <p>Sertifikasi BNSP - Data Analyst</p>
+                    <p>LSP: Digital Teknologi Informasi Indonesia</p>
+                    <p>Tahun 2025</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Profil -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>👨‍💼 Profil Profesional</h1>
+                
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <h3>📧 Informasi Kontak</h3>
+                        <ul>
+                            <li>Email: m.armaise12@gmail.com</li>
+                            <li>Telepon: (+62) 856-9387-5636</li>
+                            <li>Lokasi: Bogor, Jawa Barat</li>
+                            <li>LinkedIn: M. Armaise</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h3>🎓 Latar Belakang</h3>
+                        <ul>
+                            <li>Teknik Mesin</li>
+                            <li>2+ tahun pengalaman data</li>
+                            <li>Data Analyst Bootcamp - DQLab</li>
+                            <li>Sertifikasi BNSP</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2>💼 Pengalaman Relevan</h2>
+                
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <h3>Administration Produksi - PT Flynindo Mega Persada</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Nov 2022 - Sekarang</p>
+                    <ul style="line-height: 2; color: #555;">
+                        <li>✓ Mengelola input data produksi ke SAP dengan <strong>akurasi >98%</strong></li>
+                        <li>✓ Analisis dan monitoring persediaan untuk optimasi stok</li>
+                        <li>✓ Membuat laporan produksi dengan visualisasi data menggunakan Excel</li>
+                        <li>✓ Document control dan data validation untuk integritas data</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <h3>Administration Proyek - PT Trias Kencana Persada</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Nov 2020 - Apr 2022</p>
+                    <ul style="line-height: 2; color: #555;">
+                        <li>✓ Mengelola dan menganalisis data proyek untuk pelaporan berkala</li>
+                        <li>✓ Monitoring budget dan membuat rekomendasi cost efficiency</li>
+                        <li>✓ Document management dan quality controlling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Tujuan & Metodologi -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>🎯 Tujuan Proyek & Metodologi</h1>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin: 30px 0;">
+                    <h2 style="color: white;">Tujuan Proyek</h2>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Menganalisis performa penjualan dan pelanggan menggunakan dataset ritel dari DQLab untuk mengidentifikasi faktor utama yang memengaruhi profitabilitas perusahaan, termasuk distribusi geografis, kategori produk, dan perilaku pelanggan.
+                    </p>
+                </div>
+
+                <h2>📋 Tahapan Analisis Data</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-content">
+                            <h3>Data Collection</h3>
+                            <p>Mengimpor dataset dari DQLab ke Google Colab dan SQL untuk analisis mendalam</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-content">
+                            <h3>Data Cleaning</h3>
+                            <p>Menghapus duplikasi, mengisi nilai hilang, standardisasi format kategori produk dan kota</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-content">
+                            <h3>Exploratory Data Analysis (EDA)</h3>
+                            <p>Menganalisis pola penjualan, margin, dan performa produk menggunakan Python & SQL</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">4</div>
+                        <div class="timeline-content">
+                            <h3>Data Visualization</h3>
+                            <p>Mendesain dashboard interaktif di Looker Studio dengan KPI utama dan insight bisnis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Tools & Skills -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>🛠️ Tools & Technical Skills</h1>
+                
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <h3>📊 Google Looker Studio</h3>
+                        <p>Dashboard Design<br>Data Visualization<br>Interactive Reports</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3>💾 SQL</h3>
+                        <p>Query & Data Processing<br>Joins & Aggregation<br>Database Management</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3>🐍 Python</h3>
+                        <p>Pandas & Matplotlib<br>Data Cleaning<br>Exploratory Analysis</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3>📈 Microsoft Excel</h3>
+                        <p>Advanced Functions<br>Pivot Tables<br>Data Analysis</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3>💼 SAP Hana</h3>
+                        <p>Production Data<br>Inventory Management<br>98%+ Accuracy</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3>📋 Google Colab</h3>
+                        <p>Python Environment<br>Collaborative Analysis<br>Cloud Computing</p>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 50px;">🎓 Sertifikasi & Pelatihan</h2>
+                
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <h3>Data Analyst Bootcamp - DQLab</h3>
+                    <p style="color: #666; margin: 15px 0;">Yayasan Multimedia Nusantara (Universitas Multimedia Nusantara - UMN)</p>
+                    <ul style="line-height: 2.2; color: #555;">
+                        <li>✓ Menguasai analisis data menggunakan Python (Pandas, Matplotlib/Seaborn) dan SQL</li>
+                        <li>✓ Menerapkan teknik EDA, Data Cleansing, dan Visualisasi Data</li>
+                        <li>✓ Menyelesaikan proyek akhir: Analisis Performa Penjualan Retail</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: KPI Overview -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>📊 Key Performance Indicators (KPI)</h1>
+                
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="label">Total Transaksi</div>
+                        <div class="number">5.009</div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="label">Total Penjualan</div>
+                        <div class="number">Rp2,30jt</div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="label">Total Profit</div>
+                        <div class="number">286,4rb</div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="label">Margin</div>
+                        <div class="number">12,5%</div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="label">AOV</div>
+                        <div class="number">Rp458,61</div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 40px; border-radius: 15px; margin: 40px 0; text-align: center;">
+                    <h2 style="color: white; margin-bottom: 20px;">✅ Business Health Status</h2>
+                    <p style="font-size: 1.3em; line-height: 1.8;">
+                        Dashboard menunjukkan <strong>health business yang baik</strong> dengan 5.009 transaksi dan margin stabil di 12.5%. Data akurasi tinggi (>98%) memastikan reliability dalam pengambilan keputusan strategis.
+                    </p>
+                </div>
+
+                <h2>🎯 Sumber Data</h2>
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <p style="font-size: 1.1em; color: #555; line-height: 2;">
+                        <strong>Dataset:</strong> DQLab Retail Dataset (data simulasi penjualan retail)<br>
+                        <strong>Periode:</strong> Data historis transaksi lengkap<br>
+                        <strong>Coverage:</strong> Multi-lokasi geografis, berbagai kategori produk, dan customer behavior
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Dashboard -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>📈 Dashboard Looker Studio - Interactive</h1>
+                
+                <div class="dashboard-container">
+                    <iframe src="https://lookerstudio.google.com/reporting/bbf4e65d-0966-4356-8d10-fee730b7e78c"></iframe>
+                </div>
+                
+                <p style="text-align: center; margin-top: 20px; font-size: 1.1em; color: #666;">
+                    Dashboard interaktif menampilkan analisis geografis, performa produk, dan customer insights secara real-time
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Analisis Geografis -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>🗺️ Analisis Geografis & Distribusi Pasar</h1>
+                
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>📍 Distribusi Kota</h3>
+                        <p><span class="highlight">New York: 64.7%</span> - Dominasi sangat kuat (3.243 transaksi)</p>
+                        <p>Los Angeles: 13.5% - Kontributor kedua (676 transaksi)</p>
+                        <p>Seattle: 7.94% - Pasar berkembang (398 transaksi)</p>
+                        <p>San Francisco: 7.81% - Potensi ekspansi (391 transaksi)</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>⚠️ Risiko Konsentrasi Pasar</h3>
+                        <p>Ketergantungan tinggi pada New York (hampir 2/3 penjualan) mengindikasikan <span class="highlight">risiko konsentrasi pasar tinggi</span></p>
+                        <p>Gangguan di New York dapat berdampak signifikan pada total revenue perusahaan</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>📊 Top Performing Cities</h3>
+                        <p>New York City: ~250 unit (posisi #1)</p>
+                        <p>Los Angeles: >200 unit (posisi #2)</p>
+                        <p>Gap signifikan antara top 2 dengan kota lainnya</p>
+                        <p>Penurunan bertahap dari posisi 3-10</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>💡 Peluang Bisnis</h3>
+                        <p>Fokus geografis yang kuat pada 2 kota besar menunjukkan <span class="highlight">peluang ekspansi</span> ke kota-kota tier 2 dan 3</p>
+                        <p>Market research diperlukan untuk penetrasi pasar baru</p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 15px; margin: 30px 0;">
+                    <h2 style="color: white;">🎯 Key Insight Geografis</h2>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Konsentrasi pasar di New York sebesar 64.7% memberikan revenue stabil namun menciptakan <strong>single point of failure</strong>. Diversifikasi geografis menjadi prioritas strategis untuk risk mitigation dan sustainable growth.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Analisis Produk -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>📦 Analisis Performa Produk</h1>
+                
+                <h2>🏆 Top Performing Sub-Categories</h2>
+                
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>📎 Binders - Leader</h3>
+                        <p><span class="highlight">1.500+ unit</span> terjual</p>
+                        <p>Produk paling diminati customer</p>
+                        <p>Cash Generator utama</p>
+                        <p>Status: <strong>Cash Cow Product</strong></p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>📄 Paper</h3>
+                        <p><span class="highlight">1.500 unit</span> terjual</p>
+                        <p>Kebutuhan operasional tinggi</p>
+                        <p>Demand stabil dan konsisten</p>
+                        <p>Status: <strong>Cash Cow Product</strong></p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>🪑 Furnishings</h3>
+                        <p>~1.000 unit terjual</p>
+                        <p>Segmen furniture office</p>
+                        <p>Potensi bundling dengan supplies</p>
+                        <p>Status: <strong>Growing Market</strong></p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>📱 Phones & Storage</h3>
+                        <p>950-1.000 unit terjual</p>
+                        <p>Kategori teknologi & penyimpanan</p>
+                        <p>Perlu strategi up-selling</p>
+                        <p>Status: <strong>Potential Growth</strong></p>
+                    </div>
+                </div>
+
+                <div class="recommendation-card">
+                    <h3>💡 Strategi Produk</h3>
+                    <ul>
+                        <li><strong>Optimasi Inventory:</strong> Fokus stok pada Binders dan Paper (1.5k+ unit) sebagai produk unggulan untuk menjaga ketersediaan</li>
+                        <li><strong>Bundle Strategy:</strong> Buat paket bundling antara kategori tinggi (Binders) dengan kategori rendah untuk cross-selling</li>
+                        <li><strong>Margin Analysis:</strong> Dengan margin 12.5%, ada ruang untuk strategi promosi atau peningkatan kualitas produk</li>
+                        <li><strong>Up-selling Teknologi:</strong> Phones & Storage perlu marketing campaign untuk meningkatkan awareness dan penjualan</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Analisis Pelanggan -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>👥 Analisis Pelanggan & Customer Behavior</h1>
+                
+                <h2>🏅 Top 5 Pelanggan Terbaik</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin: 30px 0;">
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 25px; border-radius: 15px; text-align: center;">
+                        <h3 style="color: white; font-size: 1.2em;">🥇 #1</h3>
+                        <p style="margin: 15px 0; font-weight: bold;">Tamra Chand</p>
+                        <p style="font-size: 1.8em; font-weight: bold; margin: 10px 0;">Rp8,97rb</p>
+                        <p style="background: rgba(255,255,255,0.3); padding: 5px 10px; border-radius: 5px; margin-top: 10px;">5 Orders</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 15px; text-align: center;">
+                        <h3 style="color: white; font-size: 1.2em;">🥈 #2</h3>
+                        <p style="margin: 15px 0; font-weight: bold;">Raymond Buch</p>
+                        <p style="font-size: 1.8em; font-weight: bold; margin: 10px 0;">Rp8,45rb</p>
+                        <p style="background: rgba(255,255,255,0.3); padding: 5px 10px; border-radius: 5px; margin-top: 10px;">5 Orders</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 15px; text-align: center;">
+                        <h3 style="color: white; font-size: 1.2em;">🥉 #3</h3>
+                        <p style="margin: 15px 0; font-weight: bold;">Sanjit Chand</p>
+                        <p style="font-size: 1.8em; font-weight: bold; margin: 10px 0;">Rp8,13rb</p>
+                        <p style="background: rgba(255,255,255,0.3); padding: 5px 10px; border-radius: 5px; margin-top: 10px;">3 Orders</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 25px; border-radius: 15px; text-align: center;">
+                        <h3 style="color: white; font-size: 1.2em;">🏆 #4</h3>
+                        <p style="margin: 15px 0; font-weight: bold;">Tom Ashbrook</p>
+                        <p style="font-size: 1.8em; font-weight: bold; margin: 10px 0;">Rp7,78rb</p>
+                        <p style="background: rgba(255,255,255,0.3); padding: 5px 10px; border-radius: 5px; margin-top: 10px;">4 Orders</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; padding: 25px; border-radius: 15px; text-align: center;">
+                        <h3 style="color: #667eea; font-size: 1.2em;">🏆 #5</h3>
+                        <p style="margin: 15px 0; font-weight: bold;">Adrian Barton</p>
+                        <p style="font-size: 1.8em; font-weight: bold; margin: 10px 0;">Rp7,55rb</p>
+                        <p style="background: rgba(102, 126, 234, 0.2); padding: 5px 10px; border-radius: 5px; margin-top: 10px;">5 Orders</p>
+                    </div>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>📊 Customer Insights</h3>
+                        <p>Top 5 pelanggan menunjukkan pola pembelian berulang <span class="highlight">3-5 orders</span></p>
+                        <p>Mengindikasikan <strong>kepuasan pelanggan tinggi</strong> dan loyalitas kuat</p>
+                        <p>Average profit per top customer: <strong>Rp 8.000+</strong></p>
+                        <p>AOV top customers lebih tinggi dari rata-rata general customer</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>💎 High Value Customer Characteristic</h3>
+                        <p><strong>Repeat Purchase Rate:</strong> 3-5x dalam periode analisis</p>
+                        <p><strong>Consistent Buyer:</strong> Pembelian teratur dan stabil</p>
+                        <p><strong>High AOV:</strong> Nilai transaksi di atas rata-rata</p>
+                        <p><strong>Profit Contribution:</strong> Signifikan terhadap total profit</p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 35px; border-radius: 15px; margin: 30px 0;">
+                    <h2 style="color: white; margin-bottom: 20px;">🎯 Key Takeaway Customer Analysis</h2>
+                    <p style="font-size: 1.2em; line-height: 1.8;">
+                        Customer retention tinggi dari top customers dengan repeat orders 3-5x menunjukkan <strong>product-market fit yang kuat</strong>. Strategi fokus pada retention dan referral dari customer base ini dapat menghasilkan <strong>customer lifetime value yang optimal</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Rekomendasi Strategis 1 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>💡 Rekomendasi Strategis (Part 1)</h1>
+                
+                <h2>🎯 Strategi 1: Diversifikasi Geografis</h2>
+                
+                <div class="recommendation-card">
+                    <h3>⚠️ Problem Statement</h3>
+                    <ul>
+                        <li>Ketergantungan 64.7% pada New York menciptakan single point of failure</li>
+                        <li>Risiko gangguan operasional di satu wilayah sangat tinggi</li>
+                        <li>Market saturation potential di New York dalam jangka panjang</li>
+                    </ul>
+                </div>
+
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <h3>📍 Target Ekspansi</h3>
+                        <div class="big-number">Seattle & SF</div>
+                        <p>Kurangi ketergantungan NY dari 64.7% menjadi <strong>&lt;50%</strong> dalam 6-12 bulan</p>
+                        <p style="margin-top: 15px;">Current: Seattle 7.94%, San Francisco 7.81%</p>
+                        <p>Target: Tingkatkan masing-masing menjadi 15-20%</p>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <h3>📊 Implementation Plan</h3>
+                        <ul style="margin-top: 15px; line-height: 2;">
+                            <li>Market research mendalam di target cities</li>
+                            <li>Regional marketing campaign</li>
+                            <li>Logistics expansion untuk delivery</li>
+                            <li>Local partnership & distributor</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 40px;">💰 Strategi 2: Peningkatan Average Order Value (AOV)</h2>
+                
+                <div class="recommendation-card">
+                    <h3>📈 Current State vs Target</h3>
+                    <ul>
+                        <li>Current AOV: <strong>Rp 458,61</strong> dengan 5.009 transaksi</li>
+                        <li>Target AOV: <strong>Rp 550</strong> (peningkatan 20%)</li>
+                        <li>Projected Impact: <strong>Additional Revenue ~Rp 460 juta</strong></li>
+                    </ul>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>🎁 Tactics untuk Peningkatan AOV</h3>
+                        <p><strong>1. Free Shipping Threshold:</strong> Gratis ongkir untuk pembelian minimal Rp 500</p>
+                        <p><strong>2. Minimum Order Value:</strong> Diskon 10% untuk order &gt;Rp 600</p>
+                        <p><strong>3. Product Bundling:</strong> Paket hemat Binders + Paper dengan harga spesial</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>📊 Expected Results</h3>
+                        <p>Peningkatan 20% AOV dari Rp 458,61 ke Rp 550</p>
+                        <p>Dengan 5.009 transaksi = <span class="highlight">+Rp 460 juta revenue</span></p>
+                        <p>Margin tetap terjaga di 12.5% atau lebih tinggi</p>
+                        <p>Customer satisfaction meningkat dengan value proposition lebih baik</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Rekomendasi Strategis 2 -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>💡 Rekomendasi Strategis (Part 2)</h1>
+                
+                <h2>🔄 Strategi 3: Customer Retention & Loyalty Program</h2>
+                
+                <div class="recommendation-card">
+                    <h3>💎 VIP Program - Top Customer Focus</h3>
+                    <ul>
+                        <li><strong>Target:</strong> Top 5-10 customers dengan kontribusi profit signifikan</li>
+                        <li><strong>Benefits:</strong> Exclusive discount 15%, priority shipping, dedicated account manager</li>
+                        <li><strong>Expected Impact:</strong> Meningkatkan retention rate dari 60% menjadi 85%+</li>
+                        <li><strong>Revenue Impact:</strong> Customer lifetime value increase 30-40%</li>
+                    </ul>
+                </div>
+
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <h3>🔁 Repeat Purchase Strategy</h3>
+                        <div class="big-number">3-5x</div>
+                        <p style="margin-top: 15px;">Analisis pola pembelian menunjukkan sweet spot di 3-5 orders</p>
+                        <p><strong>Action Items:</strong></p>
+                        <ul style="margin-top: 10px; line-height: 1.8;">
+                            <li>Automated reminder email setelah 30 hari</li>
+                            <li>Subscription model untuk office supplies</li>
+                            <li>Personalized product recommendation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <h3>👥 Referral Program</h3>
+                        <div class="big-number">2 for 1</div>
+                        <p style="margin-top: 15px;">Manfaatkan kepuasan top customers untuk referral</p>
+                        <p><strong>Incentive Structure:</strong></p>
+                        <ul style="margin-top: 10px; line-height: 1.8;">
+                            <li>Referrer: Discount 20% untuk next purchase</li>
+                            <li>Referee: Discount 15% untuk first order</li>
+                            <li>Expected CAC reduction: 40-50%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 40px;">📦 Strategi 4: Optimasi Inventory & Supply Chain</h2>
+                
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>🎯 Focus Products</h3>
+                        <p><strong>Binders & Paper:</strong> Maintain stock level tinggi (1.5k+ unit)</p>
+                        <p>Forecasting demand dengan historical data untuk prevent stockout</p>
+                        <p>Safety stock 20-30% untuk peak season</p>
+                        <p>JIT (Just-in-Time) untuk produk slow-moving</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h3>⚡ Efficiency Improvement</h3>
+                        <p>Automated reorder point untuk cash cow products</p>
+                        <p>ABC Analysis untuk inventory prioritization</p>
+                        <p>Vendor consolidation untuk better pricing</p>
+                        <p>Expected: <span class="highlight">Inventory cost reduction 15-20%</span></p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 35px; border-radius: 15px; margin: 30px 0;">
+                    <h2 style="color: white; margin-bottom: 20px;">🚀 Total Impact Projection</h2>
+                    <p style="font-size: 1.3em; line-height: 1.8;">
+                        Dengan implementasi keempat strategi secara simultan, diproyeksikan peningkatan revenue <strong>20-25%</strong> dalam 12 bulan, penurunan customer acquisition cost <strong>40%</strong>, dan peningkatan customer lifetime value <strong>35%</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Kesimpulan & Next Steps -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>✅ Kesimpulan & Langkah Selanjutnya</h1>
+                
+                <h2>🎯 Key Findings Summary</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin: 30px 0;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px;">
+                        <h3 style="color: white;">✓ Mengidentifikasi Risiko</h3>
+                        <p style="margin-top: 15px; line-height: 1.8;">Konsentrasi pasar 64.7% di New York menciptakan vulnerability yang harus dimitigasi melalui diversifikasi geografis</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 30px; border-radius: 15px;">
+                        <h3 style="color: white;">✓ Menemukan Revenue Driver</h3>
+                        <p style="margin-top: 15px; line-height: 1.8;">Binders & Paper sebagai cash cow products dengan 1.500+ unit, menjadi foundation revenue yang stabil</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 15px;">
+                        <h3 style="color: white;">✓ Mengenali Customer Behavior</h3>
+                        <p style="margin-top: 15px; line-height: 1.8;">Repeat purchase pattern 3-5x menunjukkan customer satisfaction tinggi dan peluang loyalty program</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 30px; border-radius: 15px;">
+                        <h3 style="color: white;">✓ Strategi Concrete</h3>
+                        <p style="margin-top: 15px; line-height: 1.8;">4 strategi actionable untuk peningkatan revenue 20%+ dengan timeline implementasi yang jelas</p>
+                    </div>
+                </div>
+
+                <h2>🚀 Langkah Selanjutnya (Future Development)</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">1</div>
+                        <div class="timeline-content">
+                            <h3>Predictive Analytics</h3>
+                            <p>Mengembangkan model forecasting demand menggunakan time series analysis (ARIMA/Prophet) untuk prediksi penjualan 3-6 bulan ke depan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">2</div>
+                        <div class="timeline-content">
+                            <h3>Customer Segmentation</h3>
+                            <p>Implementasi clustering algorithm (K-Means/RFM Analysis) untuk segmentasi pelanggan dan personalized marketing strategy</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">3</div>
+                        <div class="timeline-content">
+                            <h3>Recommendation System</h3>
+                            <p>Membangun product recommendation engine menggunakan collaborative filtering untuk cross-selling dan up-selling otomatis</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">4</div>
+                        <div class="timeline-content">
+                            <h3>Real-time Monitoring</h3>
+                            <p>Setup automated alerting system untuk KPI monitoring dan anomaly detection menggunakan statistical process control</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 15px; margin: 40px 0; text-align: center;">
+                    <h2 style="color: white; margin-bottom: 20px;">💬 Closing Statement</h2>
+                    <p style="font-size: 1.3em; line-height: 1.8;">
+                        "Proyek analisis data ini mendemonstrasikan bagaimana <strong>data-driven decision making</strong> dapat menghasilkan insight actionable yang directly applicable untuk strategi bisnis nyata. Dengan kombinasi technical skills, business acumen, dan analytical thinking, saya siap berkontribusi sebagai Data Analyst profesional."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Terima Kasih -->
+        <div class="slide">
+            <div class="slide-content" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <h1 style="color: white; font-size: 4em; margin-bottom: 30px;">🙏 TERIMA KASIH</h1>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); margin: 30px 0; max-width: 800px;">
+                    <h2 style="color: white; margin-bottom: 30px;">📞 Informasi Kontak</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="font-size: 2em;">📧</div>
+                            <div>
+                                <div style="font-weight: bold; margin-bottom: 5px;">Email</div>
+                                <div>m.armaise12@gmail.com</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="font-size: 2em;">📱</div>
+                            <div>
+                                <div style="font-weight: bold; margin-bottom: 5px;">Telepon</div>
+                                <div>(+62) 856-9387-5636</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="font-size: 2em;">💼</div>
+                            <div>
+                                <div style="font-weight: bold; margin-bottom: 5px;">LinkedIn</div>
+                                <div>M. Armaise</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="font-size: 2em;">📍</div>
+                            <div>
+                                <div style="font-weight: bold; margin-bottom: 5px;">Lokasi</div>
+                                <div>Bogor, Jawa Barat</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; font-size: 1.3em;">
+                    <p style="margin-bottom: 15px;"><strong>Dashboard Link:</strong></p>
+                    <p style="background: rgba(255,255,255,0.3); padding: 15px 30px; border-radius: 10px; display: inline-block;">
+                        lookerstudio.google.com/reporting/bbf4e65d-0966-4356-8d10-fee730b7e78c
+                    </p>
+                </div>
+
+                <div style="margin-top: 50px; font-size: 1.2em; font-style: italic;">
+                    <p>"Siap untuk Sesi Tanya Jawab"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">13</span>
+    </div>
+    
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
